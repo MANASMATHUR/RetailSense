@@ -79,7 +79,7 @@ CX (Customer Experience) research shows that tonality matters for trust. By impl
 
 ## 🛠️ Tech Stack
 
-- **Next.js 15 (App Router)**: Core Framework
+- **Next.js 15 (App Router)**: Core Framework for Backend
 - **OpenAI Whisper**: Speech-to-Text
 - **Mino API**: Autonomous Web Agent
 - **Framer Motion**: State-driven animations
