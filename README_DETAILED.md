@@ -7,16 +7,43 @@ RetailSense is a project that implements autonomous browser reasoning. It allows
 The following diagram illustrates the end-to-end data flow from user voice input to the final Aussie-voiced response.
 
 ```mermaid
-graph TD
-    User((User)) -->|Voice Input| VR[Voice Recorder]
-    VR -->|Audio Blob| TranscriptionAPI[Transcribe API]
-    TranscriptionAPI -->|Whisper-1| TextTranscription[Text Transcription]
-    TextTranscription -->|GPT-4o| ExtractionAPI[Analyze API]
-    ExtractionAPI -->|Intent Extraction| IntentProcessor[Intent Processor]
-    IntentProcessor -->|Mino Agent| ReasoningEngine[Reasoning Engine]
-    ReasoningEngine -->|Live Web Navigation| Verification[Policy Verification]
-    Verification -->|Structured Result| UI[Result Dashboard]
-    UI -->|Speech Service| AussieVoice[Aussie TTS Output]
+flowchart LR
+    User((User))
+
+    subgraph Input
+        VR[Voice Recorder]
+    end
+
+    subgraph Speech_to_Text
+        TranscriptionAPI[Transcribe API]
+        TextTranscription[Text Transcription<br/>(Whisper-1)]
+    end
+
+    subgraph Understanding
+        ExtractionAPI[Analyze API<br/>(GPT-4o)]
+        IntentProcessor[Intent Processor]
+    end
+
+    subgraph Reasoning
+        ReasoningEngine[Reasoning Engine<br/>(Mino Agent)]
+        Verification[Policy Verification<br/>(Live Web Navigation)]
+    end
+
+    subgraph Output
+        UI[Result Dashboard]
+        AussieVoice[Aussie TTS Output]
+    end
+
+    User -->|Voice Input| VR
+    VR -->|Audio Blob| TranscriptionAPI
+    TranscriptionAPI --> TextTranscription
+    TextTranscription --> ExtractionAPI
+    ExtractionAPI -->|Intent Extraction| IntentProcessor
+    IntentProcessor --> ReasoningEngine
+    ReasoningEngine --> Verification
+    Verification -->|Structured Result| UI
+    UI -->|Speech Service| AussieVoice
+
 ```
 
 ## Reasoning Pipeline
