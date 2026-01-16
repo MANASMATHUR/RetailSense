@@ -15,23 +15,23 @@ flowchart LR
     end
 
     subgraph Speech_to_Text
-        TranscriptionAPI[Transcribe API]
-        TextTranscription[Text Transcription<br/>(Whisper-1)]
+        TranscriptionAPI["Transcribe API"]
+        TextTranscription["Text Transcription<br/>(Whisper-1)"]
     end
 
     subgraph Understanding
-        ExtractionAPI[Analyze API<br/>(GPT-4o)]
-        IntentProcessor[Intent Processor]
+        ExtractionAPI["Analyze API<br/>(GPT-4o)"]
+        IntentProcessor["Intent Processor"]
     end
 
     subgraph Reasoning
-        ReasoningEngine[Reasoning Engine<br/>(Mino Agent)]
-        Verification[Policy Verification<br/>(Live Web Navigation)]
+        ReasoningEngine["Reasoning Engine<br/>(Mino Agent)"]
+        Verification["Policy Verification<br/>(Live Web Navigation)"]
     end
 
     subgraph Output
-        UI[Result Dashboard]
-        AussieVoice[Aussie TTS Output]
+        UI["Result Dashboard"]
+        AussieVoice["Aussie TTS Output"]
     end
 
     User -->|Voice Input| VR
@@ -51,20 +51,15 @@ flowchart LR
 Unlike traditional RAG systems that search a pre-indexed database, RetailSense uses Just-In-Time reasoning to ensure data freshess.
 
 ```mermaid
-sequenceDiagram
-    participant U as User
-    participant A as Analyze API
-    participant M as Mino Agent
-    participant W as Web (Live)
-    
-    U->>A: Send transcribed text
-    A->>A: Extract JSON Intent (Retailer, Brand, Policy)
-    A->>M: Dispatch Agent with Intent
-    M->>W: Navigate to official help pages
-    W-->>M: Return DOM and Text content
-    M->>M: Interpret exclusions and time windows
-    M-->>A: Return verified evidence
-    A-->>U: Display answer and source links
+flowchart LR
+    User([User]) -->|Transcribed Text| AnalyzeAPI["Analyze API"]
+    AnalyzeAPI -->|Extract Intent| AnalyzeAPI
+    AnalyzeAPI -->|Dispatch| Mino["Mino Agent"]
+    Mino -->|Navigate| Web["Official Help Pages"]
+    Web -->|DOM and Text| Mino
+    Mino -->|Interpret| Mino
+    Mino -->|Verified Evidence| AnalyzeAPI
+    AnalyzeAPI -->|Answer and Sources| User
 ```
 
 ## Component Structure
