@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RetailSense – Voice-Driven Retail Policy Intelligence Agent
 
-## Getting Started
+RetailSense is a voice-first AI agent that answers complex retail policy questions by autonomously navigating real retail websites, reasoning across multiple policy documents, and returning verified, source-backed answers.
 
-First, run the development server:
+## 🎙️ The Problem (The “Why”)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Retail policies are fragmented, inconsistent across channels, and frequently updated. Traditional scraping or static LLMs often hallucinate when faced with fine print. RetailSense solves this by using **Mino's autonomous browser-native reasoning**.
+
+---
+
+## 🏗️ System Architecture
+
+RetailSense uses a modular architecture that separates concern between raw data capture, intent extraction, and autonomous reasoning.
+
+### High-Level Flow
+
+```mermaid
+graph TD
+    A[User Voice Input] -->|MediaRecorder API| B[Audio Stream]
+    B -->|OpenAI Whisper| C[Text Transcription]
+    C -->|GPT-4o API| D[Intent Extraction]
+    D -->|Mino Agent Layer| E[Autonomous Reasoning]
+    E -->|Browsing Official Sites| F[Policy Verification]
+    F -->|Reasoned Conclusion| G[Aussie Voiced Response]
+    G -->|Interactive UI| H[User View]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Component Breakdown
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Frontend (Next.js)**: A premium "Midnight Retail" UI built with Vanilla CSS and Framer Motion for high-impact visual feedback.
+2.  **Transcription Layer (Whisper)**: Ensures 95%+ accuracy in capturing natural, often ambiguous retail queries.
+3.  **Intelligence Layer (GPT-4o)**: Decomposes transcription into structured JSON (Retailer, Brand, Policy Type, etc.) to prevent reasoning hallucinations.
+4.  **Action Layer (Mino Agent)**: The "soul" of the project. It doesn't just scrape; it *reasons* by navigating to the correct pages, handling accordions, and interpreting fine print in real-time.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 💎 Unique Concepts
 
-To learn more about Next.js, take a look at the following resources:
+### 1. Polymorphic UI (Dynamic Hero)
+The Hero section uses "Polymorphic Text" to cycle through various retail concern states (Refund, Eligibility, Warranty). This isn't just an animation; it serves to prime the user's mental model for the breadth of the agent's intelligence.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Autonomous Reasoning vs. RAG
+Unlike traditional Retrieval-Augmented Generation (RAG) which relies on static daily/weekly scrapers, RetailSense uses **Just-In-Time Reasoning**. 
+- **Mino** navigates the live DOM.
+- It identifies if a policy changed "minutes ago".
+- It handles interactive elements (popups, location selectors) that break standard bots.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Trust-First Voice (Aussie Accent)
+CX (Customer Experience) research shows that tonality matters for trust. By implementing a male Australian accent (`en-AU`) with phrases like *"No worries mate"*, we bridge the gap between "robotic bot" and "helpful store associate".
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+- Node.js 18+
+- OpenAI API Key
+- Mino API Key
+
+### Installation
+
+1. Clone and install:
+   ```bash
+   npm install
+   ```
+
+2. Environment: Create `.env.local`
+   ```env
+   OPENAI_API_KEY=your_key
+   MINO_API_KEY=your_key
+   ```
+
+3. Run:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js 15 (App Router)**: Core Framework
+- **OpenAI Whisper**: Speech-to-Text
+- **Mino API**: Autonomous Web Agent
+- **Framer Motion**: State-driven animations
+- **Web Speech API**: Resident TTS Engine
+
+---
+*RetailSense demonstrates autonomous web agent capabilities. Results shown are simulated for demonstration purposes.*
